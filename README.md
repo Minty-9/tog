@@ -36,13 +36,14 @@ A clean, conversion-focused landing page built for a real-world food export busi
 ---
 
 # Project Structure
+```
 tog/
 ├── index.html        # Main landing page
 ├── foodstuff.html    # Foodstuff catalog page
 ├── rentals.html      # Catering rentals page
 ├── img/              # Product and hero images
 └── README.md
-
+```
 ---
 
 # Purpose
