@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Foodstuff – Triumph Delicious Kitchen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-deep:   #1a3d2b;
+      --green-mid:    #2d6a4f;
+      --green-fresh:  #40916c;
+      --green-light:  #74c69d;
+      --gold:         #c9a84c;
+      --gold-light:   #e9c46a;
+      --cream:        #fdf6ec;
+      --cream-dark:   #f2e8d5;
+      --text-dark:    #1a2117;
+      --text-mid:     #3d4a38;
+      --text-light:   #6b7b63;
+      --white:        #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 72px;
+      background: rgba(26,61,43,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--gold-light); text-decoration: none; letter-spacing: 0.02em; line-height: 1.2; }
+    .nav-brand span { display: block; font-size: 0.7rem; font-weight: 400; color: var(--green-light); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; position: relative; padding-bottom: 4px; transition: color 0.3s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold-light); }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: 0.3s; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 140px 5% 80px;
+      background: linear-gradient(135deg, var(--green-deep) 0%, #122b1e 100%);
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2340916c' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-header-content { position: relative; z-index: 2; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; }
+    .breadcrumb a { color: rgba(253,246,236,0.5); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--gold-light); }
+    .breadcrumb span { color: rgba(253,246,236,0.3); font-size: 0.8rem; }
+    .breadcrumb .current { color: var(--gold-light); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: var(--white); line-height: 1.1; }
+    .page-header h1 em { font-style: italic; color: var(--gold-light); }
+    .page-header p { margin-top: 1rem; font-size: 1.05rem; color: rgba(253,246,236,0.7); max-width: 520px; line-height: 1.7; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 0 5%;
+      display: flex; align-items: center; gap: 1rem; overflow-x: auto;
+    }
+    .filter-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); white-space: nowrap; padding: 1.1rem 0; }
+    .filter-btn {
+      border: none; background: none; cursor: pointer;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--text-light);
+      padding: 0.85rem 1.1rem; border-bottom: 2px solid transparent;
+      white-space: nowrap; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .filter-btn:hover { color: var(--green-fresh); }
+    .filter-btn.active { color: var(--green-deep); border-bottom-color: var(--gold); font-weight: 700; }
+
+    /* PRODUCT GRID */
+    .products-section { padding: 60px 5%; }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+    .product-card {
+      background: var(--white); border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      transition: all 0.3s; display: flex; flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    .product-card-img { height: 220px; overflow: hidden; position: relative; }
+    .product-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .product-card:hover .product-card-img img { transform: scale(1.07); }
+    .product-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--gold); color: var(--green-deep);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+    }
+    .product-card-body { padding: 1.4rem 1.5rem 1.75rem; flex: 1; display: flex; flex-direction: column; }
+    .product-card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--green-deep); }
+    .product-card-body p { font-size: 0.875rem; color: var(--text-light); margin-top: 0.5rem; line-height: 1.65; flex: 1; }
+    .product-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(0,0,0,0.06); }
+    .product-tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green-fresh); background: rgba(64,145,108,0.1); padding: 4px 10px; border-radius: 100px; }
+    .btn-order {
+      background: var(--green-deep); color: var(--white);
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 9px 18px; border-radius: 4px;
+      text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-order:hover { background: var(--green-fresh); }
+
+    /* CTA BANNER */
+    .cta-banner {
+      margin: 0 5% 80px;
+      background: linear-gradient(135deg, var(--green-deep), #122b1e);
+      border-radius: 14px; padding: 3.5rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap; position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2340916c' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-banner-text { position: relative; }
+    .cta-banner-text h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--white); }
+    .cta-banner-text h3 em { font-style: italic; color: var(--gold-light); }
+    .cta-banner-text p { color: rgba(253,246,236,0.65); margin-top: 0.5rem; font-size: 0.95rem; line-height: 1.6; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--green-deep);
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 14px 28px; border-radius: 4px;
+      transition: all 0.25s; border: 2px solid var(--gold);
+      position: relative; white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: #0d1f15; color: rgba(253,246,236,0.5); padding: 2rem 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer a { color: var(--gold-light); text-decoration: none; font-size: 0.875rem; }
+    footer a:hover { text-decoration: underline; }
+    .footer-brand { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 1rem; font-weight: 700; }
+    footer p { font-size: 0.8rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--green-deep); padding: 1rem 5%; gap: 0; }
+      .nav-links.open { display: flex; }
+      .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .nav-links a { padding: 1rem 0; display: block; }
+      .burger { display: flex; }
+      .cta-banner { padding: 2.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      Triumph Delicious
+      <span>Kitchen</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="foodstuff.html" class="active">Foodstuff</a></li>
+      <li><a href="rentals.html">Rentals</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-content">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <span class="current">Foodstuff</span>
+      </div>
+      <h1>Nigerian <em>Foodstuff</em></h1>
+      <p>Authentic, freshly processed Nigerian ingredients — hand-selected and shipped worldwide within 3–5 business days.</p>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
+    <button class="filter-btn" onclick="filterProducts('seafood', this)">Seafood</button>
+    <button class="filter-btn" onclick="filterProducts('grains', this)">Grains & Staples</button>
+    <button class="filter-btn" onclick="filterProducts('spices', this)">Spices & Peppers</button>
+    <button class="filter-btn" onclick="filterProducts('snacks', this)">Snacks & Others</button>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products-section">
+    <div class="products-grid" id="productsGrid">
+
+      <div class="product-card" data-category="snacks">
+        <div class="product-card-img">
+          <img src="img/grillsnail.jpg" alt="Grilled Snails" />
+          <span class="product-badge">Popular</span>
+        </div>
+        <div class="product-card-body">
+          <h3>Grilled Snails</h3>
+          <p>Quality grilled snails, perfectly prepared for stews, soups, and traditional dishes.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Snacks</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Grilled Snails" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="seafood">
+        <div class="product-card-img">
+          <img src="img/catfish.JPG" alt="Smoked Catfish" />
+          <span class="product-badge">Best Seller</span>
+        </div>
+        <div class="product-card-body">
+          <h3>Smoked Catfish</h3>
+          <p>Rich and freshly smoked catfish used in many traditional Nigerian dishes.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Seafood</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Smoked Catfish" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="grains">
+        <div class="product-card-img">
+          <img src="img/ijbgarri.jpg" alt="Garri" />
+        </div>
+        <div class="product-card-body">
+          <h3>Garri /kg</h3>
+          <p>Finely processed garri, perfect for drinking and making Eba — a Nigerian staple.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Grains</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Garri" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="grains">
+        <div class="product-card-img">
+          <img src="img/fufu.webp" alt="Fufu" />
+        </div>
+        <div class="product-card-body">
+          <h3>Fufu /kg</h3>
+          <p>Finely processed fufu, perfect for easy home meal preparation.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Grains</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Fufu" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="spices">
+        <div class="product-card-img">
+          <img src="img/spices.JPG" alt="Nigerian Spices" />
+          <span class="product-badge">Popular</span>
+        </div>
+        <div class="product-card-body">
+          <h3>Nigerian Spices</h3>
+          <p>A variety of Nigerian spices to give your dishes the rich, authentic flavours of home.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Spices</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Nigerian Spices" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="spices">
+        <div class="product-card-img">
+          <img src="img/drypepper.JPG" alt="Dried Pepper" />
+        </div>
+        <div class="product-card-body">
+          <h3>Dried Pepper</h3>
+          <p>Our dried pepper gives your dishes the true hot, rich flavours of Nigeria.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Spices</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Dried Pepper" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-category="seafood">
+        <div class="product-card-img">
+          <img src="img/crayfish.JPG" alt="Crayfish and Shrimp" />
+        </div>
+        <div class="product-card-body">
+          <h3>Crayfish &amp; Shrimp</h3>
+          <p>Fresh dried crayfish and shrimp, perfect for giving your meals that authentic depth.</p>
+          <div class="product-card-footer">
+            <span class="product-tag">Seafood</span>
+            <a href="mailto:info@foodstuffdelivery.com?subject=Order: Crayfish and Shrimp" class="btn-order">Order Now</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div class="cta-banner-text">
+      <h3>Can't find what you're <em>looking for?</em></h3>
+      <p>We carry more products than what's listed here. Get in touch and we'll help you out.</p>
+    </div>
+    <a href="mailto:info@foodstuffdelivery.com" class="btn-primary">Contact Us →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Triumph Delicious Kitchen</div>
+      <p style="margin-top: 4px;">© 2025 TDK. All rights reserved.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="foodstuff.html">Foodstuff</a>
+      <a href="rentals.html">Rentals</a>
+      <a href="mailto:info@foodstuffdelivery.com">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    function filterProducts(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.product-card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

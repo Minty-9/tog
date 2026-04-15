@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Triumph Delicious Kitchen – Fresh. Authentic. Delivered.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep:   #1a3d2b;
+      --green-mid:    #2d6a4f;
+      --green-fresh:  #40916c;
+      --green-light:  #74c69d;
+      --gold:         #c9a84c;
+      --gold-light:   #e9c46a;
+      --cream:        #fdf6ec;
+      --cream-dark:   #f2e8d5;
+      --text-dark:    #1a2117;
+      --text-mid:     #3d4a38;
+      --text-light:   #6b7b63;
+      --white:        #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(26,61,43,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .nav-brand span { display: block; font-size: 0.7rem; font-weight: 400; color: var(--green-light); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--cream); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative; padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--gold-light); }
+
+    /* hamburger */
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 5% 60px;
+      position: relative;
+      background: linear-gradient(135deg, var(--green-deep) 0%, #122b1e 60%, #0d1f15 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2340916c' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-blob {
+      position: absolute; right: -10%; top: 50%; transform: translateY(-50%);
+      width: 55vw; max-width: 700px; height: 55vw; max-height: 700px;
+      border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+      background: radial-gradient(ellipse at 40% 40%, rgba(64,145,108,0.18) 0%, transparent 70%);
+      border: 1px solid rgba(64,145,108,0.12);
+      animation: morph 8s ease-in-out infinite;
+    }
+    @keyframes morph {
+      0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+      50% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-light); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-tag::before { content: '🌿'; font-size: 0.85rem; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900; line-height: 1.08;
+      color: var(--white);
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.1rem; color: rgba(253,246,236,0.75);
+      line-height: 1.7; max-width: 500px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--green-deep);
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 14px 28px; border-radius: 4px;
+      transition: all 0.25s; border: 2px solid var(--gold);
+    }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--cream);
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 14px 28px; border-radius: 4px;
+      border: 2px solid rgba(253,246,236,0.3);
+      transition: all 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--cream); background: rgba(253,246,236,0.08); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .stat { }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold-light); }
+    .stat-label { font-size: 0.75rem; color: rgba(253,246,236,0.55); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+    .hero-img-wrap {
+      position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+      width: 42%; max-width: 520px;
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.2);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+      animation: fadeIn 0.8s 0.5s ease both;
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.85) saturate(1.1); }
+
+    @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ── STRIP ── */
+    .strip {
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem; padding: 14px 5%;
+      overflow: hidden;
+    }
+    .strip-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--green-deep);
+      white-space: nowrap;
+    }
+    .strip-item::before { content: '✦'; font-size: 0.6rem; opacity: 0.6; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 90px 5%; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--green-fresh);
+      margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--green-fresh); }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.15;
+      color: var(--green-deep);
+    }
+    h2 em { font-style: italic; color: var(--green-fresh); }
+    .section-desc {
+      margin-top: 1rem;
+      font-size: 1rem; color: var(--text-light);
+      line-height: 1.75; max-width: 560px;
+    }
+
+    /* ── ABOUT ── */
+    .about { background: var(--white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center; margin-top: 3rem;
+    }
+    .about-img {
+      border-radius: 8px; overflow: hidden; position: relative;
+    }
+    .about-img img { width: 100%; display: block; border-radius: 8px; object-fit: cover; max-height: 480px; }
+    .about-img-badge {
+      position: absolute; bottom: -20px; right: -20px;
+      background: var(--gold); color: var(--green-deep);
+      padding: 20px 24px; border-radius: 8px;
+      font-family: 'Playfair Display', serif; text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .about-img-badge strong { display: block; font-size: 2rem; font-weight: 900; line-height: 1; }
+    .about-img-badge span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .about-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .about-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.95rem; color: var(--text-mid); line-height: 1.6;
+    }
+    .about-list li::before {
+      content: '✓'; flex-shrink: 0;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--green-fresh); color: white;
+      font-size: 0.65rem; display: flex; align-items: center; justify-content: center;
+      margin-top: 1px; font-weight: 700;
+    }
+
+    /* ── PRODUCTS ── */
+    .products { background: var(--cream); }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .product-card {
+      background: var(--white); border-radius: 10px;
+      overflow: hidden; transition: all 0.3s;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    .product-card-img { height: 200px; overflow: hidden; }
+    .product-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .product-card:hover .product-card-img img { transform: scale(1.06); }
+    .product-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .product-card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--green-deep); }
+    .product-card-body p { font-size: 0.875rem; color: var(--text-light); margin-top: 0.4rem; line-height: 1.6; }
+    .products-cta { text-align: center; margin-top: 3rem; }
+
+    /* ── DESTINATIONS ── */
+    .destinations { background: var(--green-deep); overflow: hidden; }
+    .destinations .section-label { color: var(--green-light); }
+    .destinations .section-label::before { background: var(--green-light); }
+    .destinations h2 { color: var(--white); }
+    .destinations h2 em { color: var(--gold-light); }
+    .destinations .section-desc { color: rgba(253,246,236,0.65); }
+    .dest-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .dest-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 2rem 1.5rem; text-align: center;
+      transition: all 0.3s;
+    }
+    .dest-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+    .dest-flag { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .dest-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 0.4rem; }
+    .dest-card p { font-size: 0.8rem; color: rgba(253,246,236,0.5); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--cream-dark); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 3rem; }
+    .faq-item {
+      background: var(--white); border-radius: 10px; padding: 1.75rem;
+      border: 1px solid rgba(0,0,0,0.05); cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .faq-item:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+    .faq-item h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--green-deep); font-weight: 700; }
+    .faq-item p { font-size: 0.875rem; color: var(--text-light); margin-top: 0.6rem; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    .contact { background: var(--white); }
+    .contact-inner {
+      background: linear-gradient(135deg, var(--green-deep), #122b1e);
+      border-radius: 16px; padding: 5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .contact-inner::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2340916c' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .contact-inner h2 { color: var(--white); position: relative; }
+    .contact-inner h2 em { color: var(--gold-light); }
+    .contact-inner p { color: rgba(253,246,236,0.7); position: relative; margin: 1rem auto 2.5rem; max-width: 480px; font-size: 1rem; line-height: 1.7; }
+    .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; position: relative; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: var(--cream); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; padding: 12px 24px;
+      border-radius: 6px; transition: all 0.25s;
+    }
+    .contact-link:hover { background: var(--gold); color: var(--green-deep); border-color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d1f15; color: rgba(253,246,236,0.5);
+      padding: 2rem 5%; display: flex;
+      align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer a { color: var(--gold-light); text-decoration: none; font-size: 0.875rem; }
+    footer a:hover { text-decoration: underline; }
+    .footer-brand { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 1rem; font-weight: 700; }
+    footer p { font-size: 0.8rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-img-wrap { display: none; }
+      .hero-content { max-width: 100%; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-img-badge { right: 10px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .dest-grid { grid-template-columns: repeat(2, 1fr); }
+      .faq-grid { grid-template-columns: 1fr; }
+      .contact-inner { padding: 3rem 2rem; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--green-deep); padding: 1rem 5%; gap: 0; }
+      .nav-links.open { display: flex; }
+      .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .nav-links a { padding: 1rem 0; display: block; }
+      .burger { display: flex; }
+      .products-grid { grid-template-columns: 1fr; }
+      .dest-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 1.5rem; }
+      .strip { gap: 1.5rem; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      Triumph Delicious
+      <span>Kitchen</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="foodstuff.html">Foodstuff</a></li>
+      <li><a href="rentals.html">Rentals</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Nigerian Foodstuff &amp; Catering Rentals</div>
+      <h1>Fresh.<br/><em>Authentic.</em><br/>Delivered.</h1>
+      <p class="hero-sub">Experience the richness of Nigerian foodstuff, wherever you are in the world. From Lagos to London — we bring home to you.</p>
+      <div class="hero-ctas">
+        <a href="foodstuff.html" class="btn-primary">Shop Foodstuff →</a>
+        <a href="rentals.html" class="btn-outline">View Rentals</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">Countries served</div></div>
+        <div class="stat"><div class="stat-num">3–5</div><div class="stat-label">Day delivery</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Authentic products</div></div>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="img/spices.JPG" alt="Nigerian spices" />
+    </div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="strip-item">Export to Canada</div>
+    <div class="strip-item">Export to USA</div>
+    <div class="strip-item">Export to UK</div>
+    <div class="strip-item">Export to France</div>
+    <div class="strip-item">Lagos Catering Rentals</div>
+    <div class="strip-item">Ogun &amp; Oyo States</div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="img/catfish.JPG" alt="Premium smoked catfish" />
+        <div class="about-img-badge">
+          <strong>TDK</strong>
+          <span>Est. 2025</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Who We Are</div>
+        <h2>Bringing <em>Nigeria's Finest</em> to Your Door</h2>
+        <p class="section-desc">We specialize in exporting high-quality Nigerian foodstuff to customers worldwide. With our efficient logistics and commitment to excellence, we ensure you receive authentic, fresh products at your convenience.</p>
+        <ul class="about-list">
+          <li>Export of Nigerian foodstuff to Canada, USA, UK, and France</li>
+          <li>Custom packaging tailored to customer needs</li>
+          <li>Quick and reliable international delivery within 3–5 business days</li>
+          <li>Catering rental services across Lagos, Ogun, and Oyo states</li>
+        </ul>
+        <div style="margin-top: 2rem;">
+          <a href="foodstuff.html" class="btn-primary">Explore Our Products →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS PREVIEW -->
+  <section class="products">
+    <div class="section-label">Featured Products</div>
+    <h2>A Taste of <em>Home</em></h2>
+    <p class="section-desc">Hand-selected Nigerian foodstuffs, freshly processed and carefully packed for delivery worldwide.</p>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-card-img"><img src="img/spices.JPG" alt="Soup Spices" /></div>
+        <div class="product-card-body">
+          <h3>Soup Spices</h3>
+          <p>Fresh, organic peppersoup spices perfect for any traditional dish.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img"><img src="img/catfish.JPG" alt="Smoked Catfish" /></div>
+        <div class="product-card-body">
+          <h3>Smoked Catfish</h3>
+          <p>Premium smoked catfish, processed and packed freshly to order.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img"><img src="img/grillsnail.jpg" alt="Grilled Snails" /></div>
+        <div class="product-card-body">
+          <h3>Grilled Snails</h3>
+          <p>Quality grilled snails perfect for stews and soups.</p>
+        </div>
+      </div>
+    </div>
+    <div class="products-cta">
+      <a href="foodstuff.html" class="btn-primary">See All Products →</a>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="destinations">
+    <div class="section-label">Global Reach</div>
+    <h2>We Deliver <em>Worldwide</em></h2>
+    <p class="section-desc">Currently exporting to four countries, with more destinations coming soon.</p>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <div class="dest-flag">🇨🇦</div>
+        <h3>Canada</h3>
+        <p>International delivery</p>
+      </div>
+      <div class="dest-card">
+        <div class="dest-flag">🇺🇸</div>
+        <h3>United States</h3>
+        <p>International delivery</p>
+      </div>
+      <div class="dest-card">
+        <div class="dest-flag">🇬🇧</div>
+        <h3>United Kingdom</h3>
+        <p>International delivery</p>
+      </div>
+      <div class="dest-card">
+        <div class="dest-flag">🇫🇷</div>
+        <h3>France</h3>
+        <p>International delivery</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="section-label">FAQ</div>
+    <h2>Common <em>Questions</em></h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h4>What types of foodstuff do you export?</h4>
+        <p>We export a wide range of Nigerian foodstuff, including dried fish, garri, fufu, spices, palm oil, crayfish, and more.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How long does shipping take?</h4>
+        <p>Our international deliveries are completed within 3–5 business days, depending on your location.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What catering equipment do you rent?</h4>
+        <p>We offer plates, bowls, cutlery sets, serving spoons, glasses, chafing dishes, and more for your events.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Which areas do you serve for catering rentals?</h4>
+        <p>We serve Lagos, Ogun, and Oyo states for all catering equipment rental bookings.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do I place an order?</h4>
+        <p>You can place an order through our website or by contacting our customer service team via email or social media.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do you do custom packaging?</h4>
+        <p>Yes! We offer custom packaging options tailored to your specific needs. Contact us to discuss your requirements.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="contact-inner">
+      <div class="section-label" style="justify-content: center; color: var(--green-light);">
+        <span style="background: var(--green-light); width:24px; height:2px; display:inline-block;"></span>
+        Get In Touch
+      </div>
+      <h2>Ready to <em>Order?</em></h2>
+      <p>Reach out to us via email or follow us on social media for the latest updates, offers, and to place your order.</p>
+      <div class="contact-links">
+        <a href="mailto:info@foodstuffdelivery.com" class="contact-link">✉️ info@foodstuffdelivery.com</a>
+        <a href="#" class="contact-link">📸 Instagram</a>
+        <a href="#" class="contact-link">📘 Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Triumph Delicious Kitchen</div>
+      <p style="margin-top: 4px;">© 2025 TDK. All rights reserved.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="foodstuff.html">Foodstuff</a>
+      <a href="rentals.html">Rentals</a>
+      <a href="mailto:info@foodstuffdelivery.com">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  </script>
+</body>
+</html>
