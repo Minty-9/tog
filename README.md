@@ -1,5 +1,4 @@
 # Triumph Delicious Kitchen (TDK) — Business Website
-
 A modern, responsive business website for Triumph Delicious Kitchen, a Nigerian
 foodstuff export and catering rental company serving customers in Canada, USA, UK,
 and France.
@@ -11,7 +10,6 @@ and France.
 ---
 
 # Preview
-
 A clean, conversion-focused landing page built for a real-world food export business.
 <br>
 <img width="1883" height="956" alt="Screenshot 2026-04-15 073745" src="https://github.com/user-attachments/assets/dfe34643-e8b6-4304-8d94-00b8c76d4764" />
@@ -48,7 +46,6 @@ tog/
 ---
 
 # Purpose
-
 This project was built for a client in the Nigerian food export industry. The goal was to
 create a professional online presence that:
 * Communicates trust and authenticity
@@ -75,5 +72,4 @@ Built by **Simeon David** — Full Stack Web Developer
 ---
 
 # License
-
 This project is for portfolio/demonstration purposes
