@@ -62,15 +62,19 @@ git clone https://github.com/minty-9/tog.git
 cd tog
 open index.html
 ```
+
 ---
 
-# Developer
+# Developer
 Built by **Simeon David** — Full Stack Web Developer
+<br>
 [Upwork Profile](https://www.upwork.com/freelancers/~018d03530904ceab89?mp_source=share) | 
+<br>
 [Portfolio](https://minty-9.github.io/simeon) | 
+<br>
 [LinkedIn](https://www.linkedin.com/in/david-simeon-8b136a156)
 
 ---
 
-# License
+# License
 This project is for portfolio/demonstration purposes
