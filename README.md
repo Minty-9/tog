@@ -56,12 +56,12 @@ create a professional online presence that:
 ---
 
 # Getting Started
-
+```
 To run locally, just clone the repo and open index.html in your browser:
 git clone https://github.com/minty-9/tog.git
 cd tog
 open index.html
-
+```
 ---
 
 # Developer
